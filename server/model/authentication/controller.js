@@ -2,12 +2,13 @@ const Controller = require('../../lib/controller');
 const userFacade = require('../user/facade');
 const jwt = require('jsonwebtoken');
 const config = require('../../config');
+const crypto = require('pbkdf2');
 
 class AuthenticationController extends Controller {
 
   authenticate(req, res, next) {
     const reqUsername = req.body.username;
-    const resPassword = req.body.password;
+    const resPassword = crypto.pbkdf2Sync(req.body.password, config.pbkdf2.salt, 1, 32, 'sha256').toString('hex');
     userFacade.findOne({ username: reqUsername }).then((user) => {
       if (user) {
         if (user.password === resPassword) {

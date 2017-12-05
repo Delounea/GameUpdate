@@ -18,7 +18,8 @@
     "helmet": "^3.1.0",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.7.0",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "pbkdf2": "^3.0.14"
   },
   "devDependencies": {
     "eslint": "^3.11.1",
