@@ -5,6 +5,9 @@ const config = {
   },
   mongo: {
     url: process.env.MONGO_DB_URI || 'mongodb://localhost/game-update-database'
+  },
+  jwt: {
+    key: 'cfgdaez4dze758a78fzae&"&épphj"é&$o$pô"$c,o$p^&$éco"$oc&oâçàqsd64"&c'
   }
 };
 
