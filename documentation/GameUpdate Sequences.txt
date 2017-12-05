@@ -5,18 +5,29 @@ title GameUpdate Sequences
 
 activate Alice
 Alice->Alice: Start GameUpdate
+opt Not yet registered
+Alice->Server: Registration(username, password
+Server->Database:Add this user
+alt The username does not exist
+Server<--Database:true
+Alice<--Server:201 Created
+else Else
+Server<--Database:false
+Alice<--Server:409 Conflict
+end
+end
 Alice->Server: Authentication(username, password)
 Server->Database: correct login/password ?
-alt correct password
-Server<--Database: correct password
+alt correct login/password
+Server<--Database: true
 Alice<--Server: 200 OK + Token JWT
 else incorrect login/password
-Server<--Database: incorrect password
+Server<--Database: false
 Alice<--Server: 401 Unauthorized
 end
 Alice->Server: Is there anything to update ? (Token JWT, list of AppID and BuildID)
 Server->Server: Is this user already logged in ?
-opt Already logged in
+opt Not logged in
 Alice<--Server: 403 Forbidden
 end
 loop for each AppID
