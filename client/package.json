@@ -1,0 +1,14 @@
+{
+  "name": "game-update-client",
+  "version": "0.0.0",
+  "description": "The client part of the GameUpdate application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Antoine Lambricht, Lionel Ovart, Jonathan Samelson, Techy Martin",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "~1.7.8"
+  }
+}
