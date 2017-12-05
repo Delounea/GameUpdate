@@ -1,0 +1,47 @@
+actor Alice
+participant Server
+database Database
+title GameUpdate Sequences
+
+activate Alice
+Alice->Alice: Start GameUpdate
+Alice->Server: Authentication(username, password)
+Server->Database: correct login/password ?
+alt correct password
+Server<--Database: correct password
+Alice<--Server: 200 OK + Token JWT
+else incorrect login/password
+Server<--Database: incorrect password
+Alice<--Server: 401 Unauthorized
+end
+Alice->Server: Is there anything to update ? (Token JWT, list of AppID and BuildID)
+Server->Server: Is this user already logged in ?
+opt Already logged in
+Alice<--Server: 403 Forbidden
+end
+loop for each AppID
+Server->Database: remote BuildID ?= local BuildID
+alt remote < local BuildID
+Server->Server: Append list of changes
+else remote > local BuildID
+Server->Database: Updates BuildID
+Server<--Database:
+end
+end
+alt changesList.length == 0
+Alice<--Server: No update
+else changesList.length > 0
+Alice<--Server: Updates (list of AppID and BuildID + (size))
+end
+Alice->Alice: Start Steam
+note over Alice: Steam updates games
+note over Alice: GameUpdate analyzes changes
+Alice->Server: I got those changes (Token JWT, list of AppID and BuildID)
+loop for each AppID
+opt remote > local BuildID
+//note over Server: It could be already updated
+Server->Database: update BuildID
+Server<--Database:
+end
+end
+Alice<--Server:
