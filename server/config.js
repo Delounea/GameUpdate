@@ -8,6 +8,9 @@ const config = {
   },
   jwt: {
     key: 'cfgdaez4dze758a78fzae&"&épphj"é&$o$pô"$c,o$p^&$éco"$oc&oâçàqsd64"&c'
+  },
+  pbkdf2: {
+    salt: 'LionelIsASaltyMan'
   }
 };
 
